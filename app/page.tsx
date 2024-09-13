@@ -1,9 +1,11 @@
+import Title from "@/app/components/title";
+import Viewport from "@/app/components/viewport";
+
 export default function Home() {
   return (
-    <>
-      <div className="text-sky-500">
-        Sira Task Manager
-      </div>
-    </>
+    <div className="flex flex-col items-center h-full">
+      <Title />
+      <Viewport />
+    </div>
   );
 }
