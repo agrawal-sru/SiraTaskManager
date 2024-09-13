@@ -1,14 +1,14 @@
-interface Board {
+interface BoardType {
     name: string,
-    columns: Column[],
+    columns: ColumnType[],
 }
 
-interface Column {
+interface ColumnType {
     name: string,
-    tasks: Task[],
+    tasks: TaskType[],
 }
 
-interface Task {
+interface TaskType {
     title: string,
     id: number,
     description: string,

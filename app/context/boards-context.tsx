@@ -7,31 +7,30 @@ type BoardsContextProviderProps = {
 };
 
 type BoardsContextType = {
-    activeBoard: Board | null,
-    setActiveBoard: React.Dispatch<React.SetStateAction<Board | null>>,
-    boards: Board[],
+    activeBoard: BoardType | null,
+    setActiveBoard: React.Dispatch<React.SetStateAction<BoardType | null>>,
+    boards: BoardType[],
     addBoard: (name: string) => void,
-    editBoard: (board: Board) => void
+    editBoard: (board: BoardType) => void
 };
 
 const BoardsContext = createContext<BoardsContextType | null>(null);
 
 export default function BoardsContextProvider({ children }: BoardsContextProviderProps) {
 
-    const [boards, setBoards] = useState<Array<Board>>(() => {
+    const [boards, setBoards] = useState<Array<BoardType>>(() => {
         const storedValue = localStorage.getItem('MY_BOARDS');
-        return storedValue ? JSON.parse(localStorage.getItem('MY_BOARDS')!) as Board[] : []
+        return storedValue ? JSON.parse(localStorage.getItem('MY_BOARDS')!) as BoardType[] : [];
     });
 
-    const [activeBoard, setActiveBoard] = useState<Board | null>(null);
+    const [activeBoard, setActiveBoard] = useState<BoardType | null>(null);
 
     useEffect(() => {
-        console.log('adding to local storage')
         localStorage.setItem('MY_BOARDS', JSON.stringify(boards));
     }, [boards])
 
     const addBoard = (name: string) => {
-        const newBoard: Board = {
+        const newBoard: BoardType = {
             name,
             columns: []
         };
@@ -39,7 +38,7 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
         setActiveBoard(newBoard);
     };
 
-    const editBoard = (board: Board) => {
+    const editBoard = (board: BoardType) => {
         const newBoards = boards.map(b => {
             if(b.name === board.name)
                 return board;

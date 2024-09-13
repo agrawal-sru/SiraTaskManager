@@ -3,22 +3,23 @@
 import React from 'react'
 import AddBoard from './addBoard'
 import { useBoardsContext } from '../context/boards-context';
-import Link from 'next/link';
 
 export default function Navbar() {
 
   const { boards, setActiveBoard } = useBoardsContext();
 
+  console.log(boards)
+
   return (
-    <div>
+    <nav className='flex items-center justify-center flex-col gap-5'>
         {boards.map(board => {
           return(
-            <div onClick={() => setActiveBoard(board)}>
+            <div className='bg-indigo-300 rounded-2xl p-2' onClick={() => setActiveBoard(board)}>
               {board.name}
             </div>
           )
         })}
         <AddBoard />
-    </div>
+    </nav>
   )
 }

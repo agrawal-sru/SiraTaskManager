@@ -3,7 +3,7 @@
 import React from 'react'
 import Navbar from './navbar'
 import { useBoardsContext } from '../context/boards-context'
-import BoardView from './boardView';
+import Board from './board';
 
 export default function Viewport() {
 
@@ -13,7 +13,7 @@ export default function Viewport() {
     <section className='flex items-center justify-center h-full w-full bg-slate-200'>
         <Navbar />
         {activeBoard ? 
-          <BoardView board={activeBoard} />
+          <Board board={activeBoard} />
         : <></>}
     </section>
   )

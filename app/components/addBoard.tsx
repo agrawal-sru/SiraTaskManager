@@ -19,7 +19,7 @@ export default function AddBoard() {
     }
 
     return (
-        <div>
+        <div className='px-1 flex'>
             <input placeholder='Add Board' value={boardName} onChange={onInputChange}/>
             <Button variant="contained" onClick={onAddClick}>+</Button>
         </div>
