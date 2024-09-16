@@ -30,12 +30,22 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
     }, [boards])
 
     const addBoard = (name: string) => {
+
+        const storedIdCounter = localStorage.getItem('BOARD_ID_COUNTER');
+        let idCount = 0;
+        if(storedIdCounter) {
+            idCount = JSON.parse(localStorage.getItem('BOARD_ID_COUNTER')!) as number;
+        }
+
         const newBoard: BoardType = {
             name,
+            id: idCount + 1,
             columns: []
         };
         setBoards(boards => [...boards, newBoard]);
         setActiveBoard(newBoard);
+
+        localStorage.setItem('BOARD_ID_COUNTER', JSON.stringify(idCount + 1));
     };
 
     const editBoard = (board: BoardType) => {

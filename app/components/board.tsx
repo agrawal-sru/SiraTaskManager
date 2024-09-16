@@ -23,33 +23,41 @@ export default function Board({ board }: BoardProps) {
     };
 
     const onAddColumn = () => {
+
+        const storedIdCounter = localStorage.getItem('COLUMN_ID_COUNTER');
+        let idCount = 0;
+        if(storedIdCounter) {
+            idCount = JSON.parse(localStorage.getItem('COLUMN_ID_COUNTER')!) as number;
+        }
+
         if(newColumn === '')
             return;
         const col: ColumnType = {
             name: newColumn,
+            id: idCount + 1,
             tasks: []
         };
         board.columns.push(col);
         setNewColumn('');
         editBoard(board);
+
+        localStorage.setItem('COLUMN_ID_COUNTER', JSON.stringify(idCount + 1));
     };
 
     const onEditColumn = useCallback(( column: ColumnType ) => {
         board.columns = board.columns.map(col => {
-            if(col.name === column.name)
-                return column;
-            return col;
+            return col.id === column.id ? column : col;
         });
         editBoard(board);
     }, [boards, activeBoard])
 
     return (
-        <section className='bg-emerald-400 w-full h-full flex-col justify-center'>
+        <section className='w-full h-full flex-col justify-center bg-slate-50'>
             <div className='flex w-full justify-center py-2'>
                 <input value={newColumn} placeholder='Add Column' onChange={onInputChange}/>
                 <Button onClick={onAddColumn} variant='contained'>+</Button>
             </div>
-            <div className='flex mx-3 my-2 w-full items-center gap-3 justify-evenly'>
+            <div className='flex mx-3 my-2 w-full h-5/6 items-center gap-3 justify-evenly'>
                 {board.columns.map(column => (
                     <Column column={column} onEditColumn={onEditColumn} />
                 ))}
