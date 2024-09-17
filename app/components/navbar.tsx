@@ -8,8 +8,6 @@ export default function Navbar() {
 
   const { boards, setActiveBoard } = useBoardsContext();
 
-  console.log(boards)
-
   return (
     <nav className='flex items-center justify-center flex-col gap-5'>
         {boards.map(board => {

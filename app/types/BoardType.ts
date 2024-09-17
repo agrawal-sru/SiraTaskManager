@@ -1,18 +1,18 @@
 interface BoardType {
     name: string,
-    id: number,
+    id: string,
     columns: ColumnType[],
 }
 
 interface ColumnType {
     name: string,
-    id: number,
+    id: string,
     tasks: TaskType[],
 }
 
 interface TaskType {
     title: string,
-    id: number,
+    id: string,
     description: string,
     column: string,
 }

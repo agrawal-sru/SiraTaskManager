@@ -11,10 +11,10 @@ export default function Viewport() {
 
   return (
     <section className='flex items-center justify-center h-full w-full bg-slate-200'>
-        <Navbar />
-        {activeBoard ? 
-          <Board board={activeBoard} />
-        : <></>}
+      <Navbar />
+      {activeBoard ? 
+        <Board board={activeBoard} />
+      : <></>}
     </section>
   )
 }
