@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Task from './task'
 import { Button } from '@mui/material'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useDroppable } from '@dnd-kit/core'
+import GhostTask from './ghostTask'
 
 interface ColumnProps {
     column: ColumnType
@@ -13,6 +16,8 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState(column.name);
 
+    const { setNodeRef } = useDroppable({ id: column.id, data: { type: 'column' } });
+
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTask(e.target.value);
     };
@@ -20,7 +25,6 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
     const setNewColumnName = () => {
         if(newName === '')
             return;
-        console.log(newName);
         onEditColumn({ ...column, name: newName })
         setIsEditing(false);
     }
@@ -37,7 +41,7 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
             title: newTask,
             description: '',
             column: column.name,
-            id: idCount + 1,
+            id: `task-${(idCount + 1)}`,
         }
         column.tasks.push(task);
         setNewTask('');
@@ -47,7 +51,7 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
     }
 
     return (
-        <div className='items-center h-full p-2 w-fit flex-col flex border border-slate-700'>
+        <div className='items-center h-full p-2 w-fit flex-col flex border border-slate-700' id={column.id} >
             <h1 className='bg-blue-300 rounded-xl w-fit' onClick={() => setIsEditing(true)}>
                 {isEditing ?
                 <input
@@ -60,13 +64,18 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
                 : column.name}
             </h1>
             <div>
-                {column.tasks.map(task => (
-                    <Task task={task} />
-                ))}
                 <div className='flex p-1'>
                     <input placeholder='Add Task' value={newTask} onChange={onInputChange}/>
                     <Button variant='contained' onClick={onAddTask}>+</Button>
                 </div>
+                <SortableContext id={column.id} items={column.tasks} strategy={verticalListSortingStrategy}>
+                    <div ref={setNodeRef}>
+                        {column.tasks.map(task => (
+                            <Task task={task} />
+                        ))}
+                        {column.tasks.length > 0 ? <GhostTask columnId={column.id} /> : null }
+                    </div>
+                </SortableContext>
             </div>
         </div>
     )

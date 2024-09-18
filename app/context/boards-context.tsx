@@ -39,7 +39,7 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
 
         const newBoard: BoardType = {
             name,
-            id: idCount + 1,
+            id: `board-${(idCount + 1)}`,
             columns: []
         };
         setBoards(boards => [...boards, newBoard]);
