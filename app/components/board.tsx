@@ -133,7 +133,7 @@ export default function Board({ board }: BoardProps) {
                 <Button onClick={onAddColumn} variant='contained'>+</Button>
             </div>
             <DndContext collisionDetection={closestCorners} onDragStart={onTaskDragStart} onDragEnd={onTaskDragEnd}>
-                <div className='flex mx-3 my-2 w-full h-5/6 items-center gap-3 justify-evenly'>
+                <div className='flex mx-3 my-2 w-[95%] h-5/6 items-center gap-2 justify-evenly'>
                     {board.columns.map(column => (
                         <Column column={column} onEditColumn={onEditColumn} />
                     ))}
