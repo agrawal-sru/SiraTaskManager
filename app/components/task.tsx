@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical } from 'lucide-react';
+import TaskModal from './taskModal';
 
 interface TaskProps {
     task: TaskType
 }
 
 export default function Task({ task }: TaskProps) {
+
+  const [showModal, setShowModal] = useState(false);
 
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: task.id,
@@ -25,6 +28,7 @@ export default function Task({ task }: TaskProps) {
     <div className='border rounded-lg px-2 m-2 bg-gray-200 flex items-center'
       ref={setNodeRef}
       style={style}
+      onDoubleClick={() => setShowModal(true)}
     >
       <GripVertical
         size={20}
@@ -40,6 +44,9 @@ export default function Task({ task }: TaskProps) {
             {task.title}
         </p>
       </div>
+      {showModal &&
+        <TaskModal onClose={() => setShowModal(false)} task={task}/>
+      }
     </div>
   )
 }
