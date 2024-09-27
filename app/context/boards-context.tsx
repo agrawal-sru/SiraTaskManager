@@ -28,6 +28,9 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
     const [activeBoard, setActiveBoard] = useState<BoardType | null>(null);
 
     useEffect(() => {
+        if(typeof window === undefined)
+            return;
+        
         localStorage.setItem('MY_BOARDS', JSON.stringify(boards));
     }, [boards])
 

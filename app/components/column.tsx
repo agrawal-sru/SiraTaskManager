@@ -31,6 +31,9 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
 
     const onAddTask = () => {
 
+        if(typeof window === undefined)
+            return;
+
         const storedIdCounter = localStorage.getItem('TASK_ID_COUNTER');
         let idCount = 0;
         if(storedIdCounter) {
