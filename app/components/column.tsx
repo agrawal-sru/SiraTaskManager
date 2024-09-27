@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Task from './task'
 import { Button } from '@mui/material'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -31,13 +31,15 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
 
     const onAddTask = () => {
 
-        if(typeof window === undefined)
-            return;
+        const [storedIdCounter, setStoredIdCounter] = useState<string | null>();
 
-        const storedIdCounter = localStorage.getItem('TASK_ID_COUNTER');
+        useEffect(() => {
+            setStoredIdCounter(localStorage.getItem('TASK_ID_COUNTER'));
+        }, [])
+        
         let idCount = 0;
         if(storedIdCounter) {
-            idCount = JSON.parse(localStorage.getItem('TASK_ID_COUNTER')!) as number;
+            idCount = JSON.parse(storedIdCounter) as number;
         }
 
         const task: TaskType = {
