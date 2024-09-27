@@ -53,7 +53,7 @@ export default function Board({ board }: BoardProps) {
             return col.id === column.id ? column : col;
         });
         editBoard(board);
-    }, [activeBoard, board, editBoard])
+    }, [board, editBoard])
 
     const onTaskDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
