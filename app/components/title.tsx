@@ -4,8 +4,7 @@ import React from 'react'
 import { useBoardsContext } from '../context/boards-context';
 import { useNavigationContext } from '../context/navigation-context';
 
-export default function 
-() {
+export default function () {
   
   const { activeBoard, setActiveBoard } = useBoardsContext();
 

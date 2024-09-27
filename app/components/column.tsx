@@ -71,7 +71,7 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
                 <SortableContext id={column.id} items={column.tasks} strategy={verticalListSortingStrategy}>
                     <div ref={setNodeRef}>
                         {column.tasks.map(task => (
-                            <Task task={task} />
+                            <Task key={task.id} task={task} />
                         ))}
                         {column.tasks.length > 0 ? <GhostTask columnId={column.id} /> : null }
                     </div>

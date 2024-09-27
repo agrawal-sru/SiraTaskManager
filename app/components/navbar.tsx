@@ -29,7 +29,7 @@ export default function Navbar() {
         <nav className='flex items-center justify-center flex-col gap-5 mt-24'>
             {boards.map(board => {
               return(
-                <div className='bg-indigo-300 rounded-2xl p-2' onClick={() => setActiveBoard(board)}>
+                <div key={board.id} className='bg-indigo-300 rounded-2xl p-2' onClick={() => setActiveBoard(board)}>
                   {board.name}
                 </div>
               )

@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useBoardsContext } from '../context/boards-context';
 import Column from './column';
-import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, UniqueIdentifier, closestCorners } from '@dnd-kit/core'
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, closestCorners } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable';
 import Task from './task';
 
@@ -53,7 +53,7 @@ export default function Board({ board }: BoardProps) {
             return col.id === column.id ? column : col;
         });
         editBoard(board);
-    }, [activeBoard])
+    }, [activeBoard, board, editBoard])
 
     const onTaskDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
@@ -138,7 +138,7 @@ export default function Board({ board }: BoardProps) {
             <DndContext collisionDetection={closestCorners} onDragStart={onTaskDragStart} onDragEnd={onTaskDragEnd}>
                 <div className='flex mx-3 my-2 w-[95%] h-5/6 items-center gap-2 justify-evenly'>
                     {board.columns.map(column => (
-                        <Column column={column} onEditColumn={onEditColumn} />
+                        <Column key={column.id} column={column} onEditColumn={onEditColumn} />
                     ))}
                 </div>
                 <DragOverlay>{activeTask ? <Task task={activeTask} /> : null}</DragOverlay>
