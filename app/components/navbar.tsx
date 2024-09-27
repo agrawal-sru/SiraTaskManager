@@ -1,30 +1,31 @@
 'use client';
 
-import React, { useState } from 'react'
+import React from 'react'
 import AddBoard from './addBoard'
 import { useBoardsContext } from '../context/boards-context';
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
+import { useNavigationContext } from '../context/navigation-context';
 
 
 export default function Navbar() {
 
   const { boards, setActiveBoard, activeBoard } = useBoardsContext();
 
-  const [navVisible, setNavVisible] = useState(true);
+  const { isNavigationVisible, setIsNavigationVisible } = useNavigationContext();
 
   return (
     <section className='flex flex-col h-full px-1 py-2'>
       {activeBoard &&
-        (navVisible ?
-          <button className='flex justify-end px-2' onClick={() => setNavVisible(false)}>
+        (isNavigationVisible ?
+          <button className='flex justify-end px-2' onClick={() => setIsNavigationVisible(false)}>
           <NavigateBefore />
           </button> :
-          <button className='flex justify-end px-2' onClick={() => setNavVisible(true)}>
+          <button className='flex justify-end px-2' onClick={() => setIsNavigationVisible(true)}>
           <NavigateNext />
           </button>
         )
       }
-      {navVisible &&
+      {isNavigationVisible &&
         <nav className='flex items-center justify-center flex-col gap-5 mt-24'>
             {boards.map(board => {
               return(

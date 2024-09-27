@@ -40,7 +40,7 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
         const task: TaskType = {
             title: newTask,
             description: '',
-            column: column.name,
+            column: column.id,
             id: `task-${(idCount + 1)}`,
         }
         column.tasks.push(task);
@@ -52,7 +52,7 @@ export default function Column({ column, onEditColumn }: ColumnProps) {
 
     return (
         <div className='items-center h-full p-2 w-fit flex-col flex border border-slate-700' id={column.id} >
-            <h1 className='bg-blue-300 rounded-xl w-fit' onClick={() => setIsEditing(true)}>
+            <h1 className='bg-blue-300 rounded-xl w-fit p-1' onClick={() => setIsEditing(true)}>
                 {isEditing ?
                 <input
                     autoFocus

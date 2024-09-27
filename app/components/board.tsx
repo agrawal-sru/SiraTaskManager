@@ -83,6 +83,7 @@ export default function Board({ board }: BoardProps) {
                 
                 const newIndex = newColumn.tasks.findIndex(task => task.id === over.id);
                 currentColumn.tasks.splice(oldIndex, 1);
+                activeTask.column = newColumn.id;
                 newColumn.tasks.splice(newIndex, 0, activeTask);
                 onEditColumn(newColumn);
             }
@@ -95,6 +96,7 @@ export default function Board({ board }: BoardProps) {
                 return;
 
             currentColumn.tasks.splice(oldIndex, 1);
+            activeTask.column = newColumn.id;
             newColumn.tasks.push(activeTask);
             onEditColumn(newColumn);
         }
@@ -110,6 +112,7 @@ export default function Board({ board }: BoardProps) {
                 return;
             
             currentColumn.tasks.splice(oldIndex, 1);
+            activeTask.column = newColumn.id;
             newColumn.tasks.push(activeTask);
             onEditColumn(newColumn);
         }

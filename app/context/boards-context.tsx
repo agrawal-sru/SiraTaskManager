@@ -11,7 +11,9 @@ type BoardsContextType = {
     setActiveBoard: React.Dispatch<React.SetStateAction<BoardType | null>>,
     boards: BoardType[],
     addBoard: (name: string) => void,
-    editBoard: (board: BoardType) => void
+    editBoard: (board: BoardType) => void,
+    editColumn: (column: ColumnType) => void,
+    editTask: (task: TaskType) => void,
 };
 
 const BoardsContext = createContext<BoardsContextType | null>(null);
@@ -57,13 +59,41 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
         setBoards(newBoards);
     };
 
+    const editColumn = (column: ColumnType) => {
+        const board = boards.find(board => board.columns.find(col => col.id === column.id));
+
+        if(!board)
+            return;
+
+        const columnIndex = board.columns.findIndex(col => col.id === column.id) ?? 0;
+        board.columns.splice(columnIndex, 1, column);
+        editBoard(board);
+    }
+
+    const editTask = (task: TaskType) => {
+        const board = boards.find(board => board.columns.find(col => col.tasks.find(t => t.id === task.id)));
+        if(!board)
+            return;
+        const column = board.columns.find(col => col.tasks.find(t => t.id === task.id));
+        const newColumn = board.columns.find(col => col.id === task.column);
+        if(!column || !newColumn)
+            return;
+
+        const taskIndex = column.tasks.findIndex(t => t.id === task.id);+
+        column.tasks.splice(taskIndex, 1);
+        newColumn.tasks.push(task);
+        editColumn(column);
+    }
+
     return (
         <BoardsContext.Provider value={{
             activeBoard,
             setActiveBoard,
             boards,
             addBoard,
-            editBoard
+            editBoard,
+            editColumn,
+            editTask,
         }}>
             {children}
         </BoardsContext.Provider>
