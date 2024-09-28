@@ -30,16 +30,21 @@ export default function BoardsContextProvider({ children }: BoardsContextProvide
     useEffect(() => {
         if(typeof window === undefined)
             return;
-        
+
         localStorage.setItem('MY_BOARDS', JSON.stringify(boards));
     }, [boards])
 
     const addBoard = (name: string) => {
 
-        const storedIdCounter = localStorage.getItem('BOARD_ID_COUNTER');
+        const [storedIdCounter, setStoredIdCounter] = useState<string | null>();
+
+        useEffect(() => {
+            setStoredIdCounter(localStorage.getItem('BOARD_ID_COUNTER'));
+        }, []);
+        
         let idCount = 0;
         if(storedIdCounter) {
-            idCount = JSON.parse(localStorage.getItem('BOARD_ID_COUNTER')!) as number;
+            idCount = JSON.parse(storedIdCounter) as number;
         }
 
         const newBoard: BoardType = {
